@@ -4,7 +4,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import HomeScreen from './HomeScreen';
 import AboutScreen from './AboutScreen';
+import TaskListScreen from './TaskListScreen';
+
 import { Colors } from '../utils/Colors';
+
 const Tab = createBottomTabNavigator();
 
 const BottomTabBar = () => {
@@ -19,9 +22,12 @@ const BottomTabBar = () => {
 
             if (route.name === 'Home') {
               iconName = 'home';
+            }else if (route.name === 'TaskList') {
+              iconName = 'tasks';
             }else if (route.name === 'About') {
               iconName = 'user-o';
             }
+
 
             return <Icon name={iconName} size={size} color={color} />;
           },
@@ -31,6 +37,7 @@ const BottomTabBar = () => {
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
+        <Tab.Screen name="TaskList" component={TaskListScreen} options={{headerShown:false}}/>
         <Tab.Screen name="About" component={AboutScreen} options={{headerShown:false}}/>
       </Tab.Navigator>
   );

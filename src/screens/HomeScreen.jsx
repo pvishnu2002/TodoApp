@@ -1,12 +1,12 @@
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import HeaderComponent from '../component/HeaderComponent';
 import {Colors} from '../utils/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
-import CheckBox from '@react-native-community/checkbox';
 import {useDispatch, useSelector} from 'react-redux';
 import {DeleteTask, ToggleTask} from '../redux/action';
+import TaskItem from '../component/TaskItem';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -25,28 +25,6 @@ const HomeScreen = () => {
   const handleCheck = id => {
     dispatch(ToggleTask(id));
   };
-  const renderTaskItem = ({item}) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('UpdateTaskScreen', {item: item})}
-      style={styles.taskContainer}>
-      <View style={styles.taskContent}>
-        <CheckBox
-          value={item.isComplete}
-          onValueChange={() => handleCheck(item.id)}
-          tintColors={{true: Colors.background, false: Colors.textGrey}}
-        />
-        <View style={{width: '80%'}}>
-          <Text style={[styles.taskText]}>{item.title}</Text>
-          {item.description && (
-            <Text style={[styles.taskDes]}>{item.description}</Text>
-          )}
-        </View>
-      </View>
-      <TouchableOpacity onPress={() => handleDelete(item.id)}>
-        <AntDesign name="delete" color={Colors.red} size={24} />
-      </TouchableOpacity>
-    </TouchableOpacity>
-  );
 
   const renderEmptyList = () => (
     <View style={styles.emptyContainer}>
@@ -60,7 +38,15 @@ const HomeScreen = () => {
       <FlatList
         data={task}
         keyExtractor={item => item.id.toString()}
-        renderItem={renderTaskItem}
+        renderItem={({ item }) => (
+        <TaskItem
+          item={item}
+          onCheck={handleCheck}
+          onDelete={handleDelete}
+          // eslint-disable-next-line no-shadow
+          onPress={(item) => navigation.navigate('UpdateTaskScreen', { item: item })}
+        />
+      )}
         ListEmptyComponent={renderEmptyList}
       />
 

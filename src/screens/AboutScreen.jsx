@@ -23,6 +23,6 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight:'500',
     margin:10,
-    color:Colors.black
+    color:Colors.black,
   }
 });
