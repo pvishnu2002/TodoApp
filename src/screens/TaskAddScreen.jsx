@@ -5,11 +5,12 @@ import { useDispatch } from 'react-redux';
 import { AddTask } from '../redux/action';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../utils/Colors';
-
+import ImageComponent from '../component/ImageComponent';
 const TaskAddScreen = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [titleError, setTitleError] = useState('');
+  const [imageUri, setImageUri] = useState(null);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const handleCreateTask = () =>{
@@ -23,13 +24,17 @@ const TaskAddScreen = () => {
       isComplete:false,
       title:title,
       description:description,
+      imageUri:imageUri,
     };
     dispatch(AddTask(taskObj));
+    console.log('taskObj=====>',taskObj)
     navigation.navigate('BottomTabBar');
   };
   return (
     <View style={styles.container}>
       <HeaderComponent HeaderTxt={'Add Task'} backIcon={true}/>
+
+      <ImageComponent imageUri={imageUri} setImageUri={setImageUri} />
 
       <View style={styles.inputContainer}>
         <View style={{marginVertical:5}}>

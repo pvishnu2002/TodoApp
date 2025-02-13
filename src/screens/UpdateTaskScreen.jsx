@@ -11,6 +11,7 @@ import {Colors} from '../utils/Colors';
 import { useDispatch } from 'react-redux';
 import { UpdateTask } from '../redux/action';
 import { useNavigation } from '@react-navigation/native';
+import ImageComponent from '../component/ImageComponent';
 
 const UpdateTaskScreen = ({route}) => {
   const {item} = route.params;
@@ -18,6 +19,7 @@ const UpdateTaskScreen = ({route}) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [titleError, setTitleError] = useState('');
+  const [imageUri, setImageUri] = useState(null);
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const handleUpdateTask = () => {
@@ -31,6 +33,7 @@ const UpdateTaskScreen = ({route}) => {
         isComplete:false,
         title:title,
         description:description,
+        imageUri:imageUri,
     };
 
     dispatch(UpdateTask(updateObj));
@@ -41,11 +44,14 @@ const UpdateTaskScreen = ({route}) => {
     if (item) {
       setTitle(item.title);
       setDescription(item.description);
+      setImageUri(item.imageUri);
     }
   }, [item]);
   return (
     <View style={styles.container}>
       <HeaderComponent HeaderTxt={'Update Task'} backIcon={true} />
+
+      <ImageComponent imageUri={imageUri} setImageUri={setImageUri}/>
       <View style={styles.inputContainer}>
         <View style={{marginVertical: 5}}>
           <TextInput
